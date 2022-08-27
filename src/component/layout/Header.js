@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 
-allTool.filter((val) => {
-    if (searchTerm === "") {
-        return val;
-    } else if (val.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val;
-    }
-}).map((value, index) => { })
+// allTool.filter((val) => {
+//     if (searchTerm === "") {
+//         return val;
+//     } else if (val.toLowerCase().includes(searchTerm.toLowerCase())) {
+//         return val;
+//     }
+// }).map((value, index) => { })
 
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
             >
                 <TextField
                     value={searchTerm}
-                    onChange={e => handleChangeSearchInput(e)}
+                    // onChange={e => handleChangeSearchInput(e)}
                     id="outlined-basic" label="Tìm kiếm Key" variant="outlined" />
             </Box>
         );

@@ -373,7 +373,7 @@ function Home() {
           }
           setKeysArr(keyArr)
         })
-    }, 5000)
+    }, 10000)
     return () => clearInterval(timerId);
   }, [])
 
@@ -391,6 +391,7 @@ function Home() {
                   baiVietAll.push({
                     url: rss[0].url,
                     title: item.post_title ? item.post_title : "",
+                    content: item.post_content,
                     newUrl: `${URL_DB}WebClone/${item.post_name}` ? `${URL_DB}WebClone/${item.post_name}` : ""
                   })
                   return baiVietAll;
@@ -438,10 +439,11 @@ function Home() {
             await fetch(`${URL_DB}WebClone/rd/xml/a/get-bai-viet-by-url/${item.idUrl}`)
               .then(response => response.json())
               .then(rs => {
-                console.log(rs[0], item.idUrl, item.url);
+                console.log(rs);
                 arrDetail.push({
                   url: item.url,
                   title: rs[0] === undefined ? "" : rs[0].post_title,
+                  content:rs[0] === undefined ? "" : rs[0].post_content,
                   newUrl: rs[0] === undefined ? "" : `${URL_DB}WebClone/${rs[0].post_name}`
                 })
                 return arrDetail
