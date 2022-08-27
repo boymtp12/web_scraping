@@ -69,6 +69,12 @@ const headCells = [
         label: 'Tiêu đề',
     },
     {
+        id: 'content',
+        numeric: false,
+        disablePadding: true,
+        label: 'Content',
+    },
+    {
         id: 'url_new',
         numeric: false,
         disablePadding: true,
@@ -237,7 +243,7 @@ const { keyArr, displayUrl, setDisplayUrl } = props;
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflow: 'auto' }}>
+        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflowY: 'auto' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
@@ -280,6 +286,11 @@ const { keyArr, displayUrl, setDisplayUrl } = props;
                                             </TableCell>
                                             <TableCell align="left">
                                                 {data.title}
+                                            </TableCell>
+                                            <TableCell align="left" sx={{width: 400}}>
+                                                <p className='row-2'>
+                                                {data.content}
+                                                </p>
                                             </TableCell>
                                             <TableCell align="left">
                                                 <a href={data.newUrl} target="_blank">

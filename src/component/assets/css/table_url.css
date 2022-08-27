@@ -1,0 +1,10 @@
+.row-2 {
+    font-weight: 400;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: left;
+}
