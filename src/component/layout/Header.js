@@ -16,33 +16,10 @@ import TextField from '@mui/material/TextField';
 
 
 const Header = () => {
-    const [searchTerm, setSearchTerm] = React.useState('')
-
-    // function handleChangeSearchInput(e) {
-    //     setSearchTerm(e.target.value);
-    // }
-
-    function BasicTextFields() {
-        return (
-            <Box
-                component="form"
-                sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
-            >
-                <TextField
-                    // value={searchTerm}
-                    // onChange={e => handleChangeSearchInput(e)}
-                    id="outlined-basic" label="Tìm kiếm Key" variant="outlined" />
-            </Box>
-        );
-    }
+    
     return (
         <div className="header">
             <Link className="logo" to="/">Home</Link>
-            <BasicTextFields />
         </div>
     )
 }

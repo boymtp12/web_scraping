@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import PageResult from './component/PageResult';
 import HomeSearch from './component/HomeSearch';
-import Test from './Test';
+import Test from './component/Test';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
