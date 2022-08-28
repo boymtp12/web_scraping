@@ -17,6 +17,11 @@ import TextField from '@mui/material/TextField';
 
 const Header = () => {
     const [searchTerm, setSearchTerm] = React.useState('')
+
+    function handleChangeSearchInput(e) {
+        setSearchTerm(e.target.value);
+    }
+
     function BasicTextFields() {
         return (
             <Box
@@ -29,7 +34,7 @@ const Header = () => {
             >
                 <TextField
                     value={searchTerm}
-                    // onChange={e => handleChangeSearchInput(e)}
+                    onChange={e => handleChangeSearchInput(e)}
                     id="outlined-basic" label="Tìm kiếm Key" variant="outlined" />
             </Box>
         );

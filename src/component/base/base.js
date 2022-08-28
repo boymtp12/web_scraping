@@ -10,17 +10,17 @@ export const URL_HTTP = window.location.origin + '/'
 console.log(URL_HTTP);
 // const URL_HTTP = 'https://spec.edu.vn/etool/'
 
-export const URL_DB = 'http://localhost:8089/'
+export const URL_DB = 'http://localhost:8099/'
 
 const TOKENHEADER_VALUE = getCookie('Authorization')
 const URL_API_GET = URL_HTTP + 'api/v1/private-get/'
 const URL_API_EDIT = URL_HTTP + 'api/v1/private-edit/'
 // cx=622357283d8f7426e">
 
-export const KEY_API_SEARCH = 'AIzaSyDM6h0xL0RS58CwvkNgEYzBtLzPgZ6lOeo'
+// export const KEY_API_SEARCH = 'AIzaSyDM6h0xL0RS58CwvkNgEYzBtLzPgZ6lOeo'
 export const LINK_SEARCH = 'https://www.googleapis.com/customsearch/v1?'
 
-// export const KEY_API_SEARCH = 'AIzaSyAtvWiWUms7XR_NkzhFXFkLa4BM-5jUTdE'
+export const KEY_API_SEARCH = 'AIzaSyAtvWiWUms7XR_NkzhFXFkLa4BM-5jUTdE'
 // export const LINK_SEARCH = 'https://www.googleapis.com/customsearch/v1/siterestrict?'
 
 export const CX_SEARCH = '622357283d8f7426e';
