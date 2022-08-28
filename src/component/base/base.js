@@ -10,7 +10,7 @@ export const URL_HTTP = window.location.origin + '/'
 console.log(URL_HTTP);
 // const URL_HTTP = 'https://spec.edu.vn/etool/'
 
-export const URL_DB = 'http://localhost:8099/'
+export const URL_DB = 'http://localhost:8089/'
 
 const TOKENHEADER_VALUE = getCookie('Authorization')
 const URL_API_GET = URL_HTTP + 'api/v1/private-get/'
