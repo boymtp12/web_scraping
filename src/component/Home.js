@@ -352,7 +352,6 @@ function Home() {
   }
 
   React.useEffect(() => {
-
     const timerId = setInterval(() => {
       let keyArr = [];
       fetch(`${URL_DB}WebClone/rd/xml/a/get-key`)
@@ -531,7 +530,7 @@ function Home() {
     })
     newKeysArr.map(async (item, index) => {
       var urlAll = [];
-      await fetch(`${LINK_SEARCH}key=${KEY_API_SEARCH}&cx=${CX_SEARCH}&start=1&num=3&q=${item.ten}`)
+      await fetch(`${LINK_SEARCH}key=${KEY_API_SEARCH}&cx=${CX_SEARCH}&start=1&num=10&q=${item.ten}`)
         .then(response => {
           return response.json();
         })
@@ -543,7 +542,7 @@ function Home() {
           //em muốn lấy ra 20 url ở đây, sau đó truyền vào options và gọi API save URL, 
         })
 
-      await fetch(`${LINK_SEARCH}key=${KEY_API_SEARCH}&cx=${CX_SEARCH}&start=11&num=2&q=${item.ten}`)
+      await fetch(`${LINK_SEARCH}key=${KEY_API_SEARCH}&cx=${CX_SEARCH}&start=11&num=10&q=${item.ten}`)
         .then(response => {
           console.log(response);
           return response.json();
