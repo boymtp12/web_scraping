@@ -20,7 +20,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import { Button } from '@mui/material';
-import { CX_SEARCH, KEY_API_SEARCH,URL_DB, toastInfor } from './base/base';
+import { CX_SEARCH, KEY_API_SEARCH, URL_DB, toastInfor } from './base/base';
 import { Link } from 'react-router-dom';
 
 const rows = [
@@ -179,7 +179,7 @@ EnhancedTableToolbar.propTypes = {
 
 
 function TableUrl(props) {
-const { keyArr, displayUrl, setDisplayUrl } = props;
+    const { keyArr, displayUrl, setDisplayUrl } = props;
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
@@ -243,7 +243,7 @@ const { keyArr, displayUrl, setDisplayUrl } = props;
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflowY: 'auto' }}>
+        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflowY: 'auto',border: '1px solid #cccccc8a', borderRadius:'4px' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
@@ -287,14 +287,12 @@ const { keyArr, displayUrl, setDisplayUrl } = props;
                                             <TableCell align="left">
                                                 {data.title}
                                             </TableCell>
-                                            <TableCell align="left" sx={{width: 400}}>
-                                                <p className='row-2'>
-                                                {data.content}
-                                                </p>
+                                            <TableCell align="left" className='row-2'>
+                                                {data.content.slice(0, 50)}
                                             </TableCell>
                                             <TableCell align="left">
                                                 <a href={data.newUrl} target="_blank">
-                                                {data.newUrl}
+                                                    {data.newUrl}
                                                 </a>
                                             </TableCell>
                                         </TableRow>

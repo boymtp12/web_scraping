@@ -425,7 +425,6 @@ function Home () {
   const handleStart = handleClose => {
     if (file.rows.length !== 0) {
       handlePostKey(file.rows)
-      toastSuccess('Đang bắt đầu cào bài')
     } else {
       toast.warning('Chưa có dữ liệu')
     }
@@ -454,7 +453,6 @@ function Home () {
             )
               .then(response => response.json())
               .then(rs => {
-                console.log(rs)
                 arrDetail.push({
                   url: item.url,
                   title: rs[0] === undefined ? '' : rs[0].post_title,
