@@ -406,10 +406,6 @@ function Home() {
 
   React.useEffect(() => {
     getKey()
-    const timerId = setInterval(() => {
-      getKey()
-    }, 30000)
-    return () => clearInterval(timerId)
   }, [])
 
   React.useEffect(() => {
