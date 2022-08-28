@@ -1,4 +1,4 @@
-import './assets/css/table_url.css'
+import './assets/css/home.css'
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -19,9 +19,10 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { CX_SEARCH, KEY_API_SEARCH, URL_DB, toastInfor } from './base/base';
 import { Link } from 'react-router-dom';
+import SearchAppBar from './SearchAppBar';
 
 const rows = [
 
@@ -69,16 +70,16 @@ const headCells = [
         label: 'Tiêu đề',
     },
     {
-        id: 'content',
-        numeric: false,
-        disablePadding: true,
-        label: 'Content',
-    },
-    {
         id: 'url_new',
         numeric: false,
         disablePadding: true,
         label: 'URL mới',
+    },
+    {
+        id: 'content',
+        numeric: false,
+        disablePadding: true,
+        label: 'Nội dung',
     },
 ];
 
@@ -140,6 +141,7 @@ const EnhancedTableToolbar = (props) => {
                     bgcolor: (theme) =>
                         alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
                 }),
+                marginBottom: '28px'
             }}
         >
             {numSelected > 0 ? (
@@ -152,14 +154,18 @@ const EnhancedTableToolbar = (props) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
-                    component="div"
-                >
-                    Danh sách URL
-                </Typography>
+                <>
+                    <Typography
+                        sx={{  flex: '1 1 60%',marginRight: '32px', fontWeight: 600 }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                    >
+                        Danh sách URL
+                    </Typography>
+                    <DropdownFilter />
+                    <SearchAppBar />
+                </>
             )}
 
             {/* <Tooltip title="Delete">
@@ -176,7 +182,40 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 
+function BasicTextFields() {
+    return (
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, width: '35ch' },
+            }}
+            noValidate
+            autoComplete="off"
+        >
+            <TextField
+                // value={searchTerm}
+                // onChange={e => handleChangeSearchInput(e)}
+                id="outlined-basic" label="Tìm kiếm URL" variant="outlined" />
+        </Box>
+    );
+}
 
+function DropdownFilter() {
+    const handleDropDown = () => {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    return (
+        <div className="dropdown">
+            <button onClick={handleDropDown} className="dropbtn">Lọc URL</button>
+            <div id="myDropdown" className="dropdown-content">
+                <div>Tất cả</div>
+                <div>Đã cào</div>
+                <div>Chưa cào</div>
+            </div>
+        </div>
+    )
+}
 
 function TableUrl(props) {
     const { keyArr, displayUrl, setDisplayUrl } = props;
@@ -243,7 +282,7 @@ function TableUrl(props) {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflowY: 'auto',border: '1px solid #cccccc8a', borderRadius:'4px' }}>
+        <Box sx={{ position: 'fixed', top: '0', right: '150px', width: '62%', margin: '120px 0 0 120px', bottom: 100, overflowY: 'auto', border: '1px solid #cccccc8a', borderRadius: '5px' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
@@ -279,21 +318,21 @@ function TableUrl(props) {
                                             key={index}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell align="left">
+                                            <TableCell align="left" sx={{ fontWeight: 500 }}>
                                                 <a href={data.url} target="_blank">
                                                     {data.url}
                                                 </a>
                                             </TableCell>
-                                            <TableCell align="left">
+                                            <TableCell align="left" sx={{ fontWeight: 500 }}>
                                                 {data.title}
                                             </TableCell>
-                                            <TableCell align="left" className='row-2'>
-                                                {data.content.slice(0, 50)}
-                                            </TableCell>
-                                            <TableCell align="left">
+                                            <TableCell align="left" sx={{ fontWeight: 500 }}>
                                                 <a href={data.newUrl} target="_blank">
                                                     {data.newUrl}
                                                 </a>
+                                            </TableCell>
+                                            <TableCell sx={{ width: '150px', fontWeight: 500 }} align="left">
+                                                <div className='btn-content'>Chi tiết</div>
                                             </TableCell>
                                         </TableRow>
                                     );

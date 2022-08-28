@@ -51,10 +51,11 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { ToastContainer, toast } from 'react-toastify'
 import TableUrl from './TableUrl'
+import SearchAppBar from './SearchAppBar'
 
 const rows = []
 
-function AlertDialog (props) {
+function AlertDialog(props) {
   const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
@@ -102,7 +103,7 @@ function AlertDialog (props) {
   )
 }
 
-function descendingComparator (a, b, orderBy) {
+function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1
   }
@@ -112,7 +113,7 @@ function descendingComparator (a, b, orderBy) {
   return 0
 }
 
-function getComparator (order, orderBy) {
+function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy)
@@ -120,7 +121,7 @@ function getComparator (order, orderBy) {
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort (array, comparator) {
+function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0])
@@ -138,10 +139,33 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: 'KEY API'
-  }
+  },
+  // {
+  //   id: 'search-key',
+  //   label: <BasicTextFields />
+  // }
 ]
 
-function EnhancedTableHead (props) {
+function BasicTextFields() {
+  return (
+    <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '35ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      {/* <TextField
+        // value={searchTerm}
+        // onChange={e => handleChangeSearchInput(e)}
+        id="outlined-basic" label="Tìm kiếm Key" variant="outlined" /> */}
+      <SearchAppBar />
+    </Box>
+  );
+}
+
+function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
     order,
@@ -174,7 +198,7 @@ function EnhancedTableHead (props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ padding: '0 16px' }}
+            sx={{ padding: '0 16px', display: 'flex', justifyContent: 'space-between' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -188,6 +212,7 @@ function EnhancedTableHead (props) {
                 </Box>
               ) : null}
             </TableSortLabel>
+            <BasicTextFields />
           </TableCell>
         ))}
       </TableRow>
@@ -232,7 +257,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%', fontWeight: 600 }}
           variant='h6'
           id='tableTitle'
           component='div'
@@ -262,7 +287,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 }
 
-function Home () {
+function Home() {
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('calories')
   const [selected, setSelected] = React.useState([])
@@ -388,36 +413,33 @@ function Home () {
   }, [])
 
   React.useEffect(() => {
-    const timerId = setInterval(() => {
-      let baiVietAll = []
-      fetch(`${URL_DB}WebClone/rd/xml/a/get-bai-viet-all`)
-        .then(response => response.json())
-        .then(rs => {
-          if (rs.length !== 0) {
-            rs.map(async item => {
-              await fetch(
-                `${URL_DB}WebClone/rd/xml/a/get-url-by-id/${item.id_url}`
-              )
-                .then(response => response.json())
-                .then(rss => {
-                  baiVietAll.push({
-                    url: rss[0].url,
-                    title: item.post_title ? item.post_title : '',
-                    content: item.post_content,
-                    newUrl: `${URL_DB}WebClone/${item.post_name}`
-                      ? `${URL_DB}WebClone/${item.post_name}`
-                      : ''
-                  })
-                  return baiVietAll
+    let baiVietAll = []
+    fetch(`${URL_DB}WebClone/rd/xml/a/get-bai-viet-all`)
+      .then(response => response.json())
+      .then(rs => {
+        if (rs.length !== 0) {
+          rs.map(async item => {
+            await fetch(
+              `${URL_DB}WebClone/rd/xml/a/get-url-by-id/${item.id_url}`
+            )
+              .then(response => response.json())
+              .then(rss => {
+                baiVietAll.push({
+                  url: rss[0].url,
+                  title: item.post_title ? item.post_title : '',
+                  content: item.post_content,
+                  newUrl: `${URL_DB}WebClone/${item.post_name}`
+                    ? `${URL_DB}WebClone/${item.post_name}`
+                    : ''
                 })
-                .then(rs => {
-                  setDisplayUrl([...rs])
-                })
-            })
-          }
-        })
-    }, 30000)
-    return () => clearInterval(timerId)
+                return baiVietAll
+              })
+              .then(rs => {
+                setDisplayUrl([...rs])
+              })
+          })
+        }
+      })
   }, [])
 
   // Hàm logic xử lý cào
@@ -606,10 +628,14 @@ function Home () {
   return (
     <>
       <Box
+        className="container"
         sx={{ position: 'relative', width: '22%', margin: '100px 0 0 120px' }}
       >
         <label htmlFor='inputTag'>
-          <span className='btn-input'> Import</span>
+          <span className='btn-import'>
+            Import
+            <i className="fa-solid fa-file-import"></i>
+          </span>
           <input
             id='inputTag'
             type='file'
@@ -626,7 +652,6 @@ function Home () {
           />
           <TableContainer>
             <Table
-              sx={{ minWidth: 750 }}
               aria-labelledby='tableTitle'
               size={dense ? 'small' : 'medium'}
             >
@@ -665,6 +690,7 @@ function Home () {
                           />
                         </TableCell>
                         <TableCell
+                          sx={{ fontWeight: 500 }}
                           align='left'
                           onClick={() => handleDisplayUrl(data.id)}
                         >
@@ -688,7 +714,7 @@ function Home () {
           <TablePagination
             rowsPerPageOptions={[100, 200, 500]}
             component='div'
-            count={file.rows.length}
+            count={keysArr.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
