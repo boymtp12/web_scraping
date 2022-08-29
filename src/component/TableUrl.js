@@ -24,6 +24,43 @@ import { CX_SEARCH, KEY_API_SEARCH, URL_DB, toastInfor } from './base/base';
 import { Link } from 'react-router-dom';
 import SearchAppBar from './SearchAppBar';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+function FormDialog(props) {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <div>
+            <div onClick={handleClickOpen} className='btn-content'>Chi tiết</div>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Chi tiết Nội dung</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {props.content ?? "Không lấy được html"}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Subscribe</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
+
+
 const rows = [
 
 ];
@@ -93,6 +130,18 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        color="primary"
+                        indeterminate={numSelected > 0 && numSelected < rowCount}
+                        checked={rowCount > 0 && numSelected === rowCount}
+                        onChange={onSelectAllClick}
+                        inputProps={{
+                            'aria-label': 'select all desserts',
+                        }}
+                    />
+                </TableCell>
+
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -156,7 +205,7 @@ const EnhancedTableToolbar = (props) => {
             ) : (
                 <>
                     <Typography
-                        sx={{  flex: '1 1 60%',marginRight: '32px', fontWeight: 600 }}
+                        sx={{ flex: '1 1 60%', marginRight: '32px', fontWeight: 600 }}
                         variant="h6"
                         id="tableTitle"
                         component="div"
@@ -318,6 +367,15 @@ function TableUrl(props) {
                                             key={index}
                                             selected={isItemSelected}
                                         >
+                                            <TableCell padding="checkbox">
+                                                <Checkbox
+                                                    color="primary"
+                                                    checked={isItemSelected}
+                                                    inputProps={{
+                                                        'aria-labelledby': labelId,
+                                                    }}
+                                                />
+                                            </TableCell>
                                             <TableCell align="left" sx={{ fontWeight: 500 }}>
                                                 <a href={data.url} target="_blank">
                                                     {data.url}
@@ -332,7 +390,8 @@ function TableUrl(props) {
                                                 </a>
                                             </TableCell>
                                             <TableCell sx={{ width: '150px', fontWeight: 500 }} align="left">
-                                                <div className='btn-content'>Chi tiết</div>
+                                                {/* <div className='btn-content'>Chi tiết</div> */}
+                                                <FormDialog content={data.content} />
                                             </TableCell>
                                         </TableRow>
                                     );
