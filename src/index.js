@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import PageResult from './component/PageResult';
 import HomeSearch from './component/HomeSearch';
 import Test from './component/Test';
+import BackList from './component/BackList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
       <Route path="result" element={<PageResult />} />
       <Route path="home-search" element={<HomeSearch />} />
       <Route path="test" element={<Test />} />
+      <Route path="back-list" element={<BackList />} />
     </Routes>
   </BrowserRouter>
 );

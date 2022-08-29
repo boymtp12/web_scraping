@@ -53,6 +53,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import TableUrl from './TableUrl'
 import SearchAppBar from './SearchAppBar'
 
+
 const rows = []
 
 function AlertDialog(props) {
@@ -138,7 +139,7 @@ const headCells = [
     id: 'key',
     numeric: false,
     disablePadding: true,
-    label: 'KEY API'
+    label: ''
   },
   // {
   //   id: 'search-key',
@@ -183,6 +184,7 @@ function EnhancedTableHead(props) {
       <TableRow>
         <TableCell padding='checkbox'>
           <Checkbox
+            sx={{display: 'none'}}
             color='primary'
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -382,6 +384,25 @@ function Home() {
       }
     })
   }
+
+  const fileHandlerBackList = async event => {
+    let fileObj = event.target.files[0]
+    let fileArr = [];
+
+    await ExcelRenderer(fileObj, (err, resp) => {
+      console.log(resp);
+      toastSuccess('Import thành công!')
+      resp.rows.splice(0, 2)
+      if (err) {
+        console.log(err)
+      } else {
+        fileArr = {cols: resp.cols, rows: resp.rows};
+      }
+    })
+    setFile(...fileArr)
+    console.log(fileArr);
+  }
+
   const getKey = () => {
     let keyArr = []
     fetch(`${URL_DB}WebClone/rd/xml/a/get-key`)
@@ -423,7 +444,7 @@ function Home() {
                 baiVietAll.push({
                   url: rss[0].url,
                   title: item.post_title ? item.post_title : '',
-                  content: item.post_content,
+                  content: item.post_content ? item.post_content : '',
                   newUrl: `${URL_DB}WebClone/${item.post_name}`
                     ? `${URL_DB}WebClone/${item.post_name}`
                     : ''
@@ -452,6 +473,7 @@ function Home() {
   // End hàm logic xử lý cào
 
   const handleDisplayUrl = id => {
+    document.getElementsByClassName(`table-row-${id}`)[0].classList.toggle('btn-choose')
     if (id) {
       fetch(`${URL_DB}WebClone/rd/xml/a/get-url/${id}`)
         .then(response => response.json())
@@ -639,6 +661,19 @@ function Home() {
             style={{ display: 'none' }}
           />
         </label>
+
+        <label htmlFor='inputTag2'>
+          <span className='btn-import'>
+            Import
+            <i className="fa-solid fa-file-import"></i>
+          </span>
+          <input
+            id='inputTag2'
+            type='file'
+            onChange={e => fileHandlerBackList(e)}
+            style={{ display: 'none' }}
+          />
+        </label>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <EnhancedTableToolbar
             numSelected={selected.length}
@@ -665,6 +700,7 @@ function Home() {
                   .map((data, index) => {
                     const isItemSelected = isSelected(data[index])
                     const labelId = `enhanced-table-checkbox-${index}`
+                    const tableRow = `table-row-${data.id} table-row`
                     return (
                       <TableRow
                         hover
@@ -674,7 +710,7 @@ function Home() {
                         tabIndex={-1}
                         key={index}
                         selected={isItemSelected}
-                        className='table-row'
+                        className={tableRow}
                       >
                         <TableCell padding='checkbox'>
                           <Checkbox

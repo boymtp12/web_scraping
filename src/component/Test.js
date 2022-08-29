@@ -1,21 +1,17 @@
-import './assets/css/home.css'
+import React from 'react';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Test = () => {
-  function handleDropDown() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
+function Test() {
+  const notify = () => toast("Wow so easy!");
 
   return (
-    <div className="dropdown">
-      <button onClick={handleDropDown} className="dropbtn">Dropdown</button>
-      <div id="myDropdown" className="dropdown-content">
-        <div>Tất cả</div>
-        <div>Đã cào</div>
-        <div>Chưa cào</div>
-      </div>
+    <div>
+      <button onClick={notify}>Notify!</button>
+      <ToastContainer />
     </div>
-  )
+  );
 }
 
 export default Test;

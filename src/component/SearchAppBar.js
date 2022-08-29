@@ -53,7 +53,7 @@ export default function SearchAppBar() {
     <Box >
       <AppBar position="static" sx={{background: 'transparent', boxShadow: 'none',flexDirection: 'row-reverse'}}>
         <Toolbar>
-          <Search sx={{background: '#585858'}}>
+          <Search sx={{background: '#e5e5e5', color: '#000'}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

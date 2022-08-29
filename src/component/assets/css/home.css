@@ -43,7 +43,7 @@
     color: #556ff6;
     font-weight: 600;
     padding: 8px 16px;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -63,9 +63,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    top: -5px;
-    right: 120px;
-    min-width: 300px;
+    min-width: 106px;
     overflow: auto;
     z-index: 1;
 }
@@ -89,7 +87,11 @@
 }
 
 .show {
-    display: flex;
+    display: block;
 }
 
 /* end drop down */
+
+.btn-choose  {
+    background: #e0e7fe;
+}
